@@ -17,6 +17,7 @@ set encoding=utf-8
 set showmatch
 set cursorline
 set termguicolors
+set nocompatible
 
 
 set colorcolumn=120
@@ -31,12 +32,14 @@ Plug 'vim-airline/vim-airline'
 Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdtree'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'jiangmiao/auto-pairs'
 "Code modification
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
 "Tema
+let g:airline_theme = "tokyonight"
 let g:tokyonight_style = 'night' " available: night, storm
 let g:tokyonight_enable_italic = 1
 colorscheme tokyonight
@@ -51,3 +54,4 @@ nmap <Leader>nt :NERDTreeFind<CR>
 
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q<CR>
+nmap <Leader>Q :q!<CR>
