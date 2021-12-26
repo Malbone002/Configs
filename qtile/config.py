@@ -335,6 +335,7 @@ screens = [
                     foreground = color_fg,
                     format = "%A, %B %d - %H:%M"
                 ),
+                fc_separador(color_grupo4),
             ],
             tamano_barra,
             background=colorBarra
