@@ -308,16 +308,18 @@ screens = [
                 widget.CurrentLayout(
                     background = color_grupo2
                 ),
+                fc_separador(color_grupo2),
                 # Grupo 3
                 fc_powerline(color_grupo3, color_grupo2),
-                fc_icono("  ", color_grupo3),
+                fc_icono(" ", color_grupo3),
                 widget.PulseVolume(
                     foreground = color_fg,
                     background = color_grupo3,
                     limit_max_volume = True,
                     fontsize = tamano_fuente
                 ),
-                fc_icono("  ", color_grupo3),
+                fc_separador(color_grupo3),
+                fc_icono(" ", color_grupo3),
                 widget.CheckUpdates(
                     background = color_grupo3,
                     colour_have_updates = color_actualizaciones,
