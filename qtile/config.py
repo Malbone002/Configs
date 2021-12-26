@@ -10,7 +10,7 @@ from libqtile.lazy import lazy
 
 mod = "mod4"
 colorBarra ="#282a36"
-tamano_barra = 26
+tamano_barra = 24
 fuente_preterminada = "Ubuntu Mono Nerd Font"
 tamano_fuente = 16
 tamano_iconos = 22
@@ -22,31 +22,28 @@ color_texto1 = "#bd93f9"
 color_bg = "#282a36"
 color_fg = "#ffffff"
 color_grupo1 = "#bd93f9"
-color_grupo2 = "#ab47bc"
+color_grupo2 = "#6495ed" #ab47bc
 color_actualizaciones = "#ffffff"
 dispositivo_red = "enp4s0"
-color_grupo3 = "#8e24aa"
-color_grupo4 = "#4A148C"
+color_grupo3 = "bd93f9"
+color_grupo4 = "#6495ed"#8E24AA
+color_grupo5 = "#bd93f9"
 
 # Funciones
-def fc_separador():
+def fc_separador(uColor):
     return widget.Sep(
         linewidth = 0,
-        padding = 3,
+        padding = 5,
         foreground = color_fg,
-        background = color_bg,
+        background = uColor
     )
 
-def fc_rectangulo(vColor,tipo):
-    if tipo == 0:
-        icono = ""
-    else:
-        icono = ""
+def fc_powerline(vColor, bColor):
     return widget.TextBox(
-        text = icono,
-        fontsize = tamano_barra + 5,
+        text = "",
+        fontsize = 37,
         foreground = vColor,
-        background = color_bg,
+        background = bColor,
         padding = -3
     )
 
@@ -228,66 +225,91 @@ screens = [
                     urgent_alert_method = 'block',
                     urgent_border = color_urgent
                 ),
-                fc_separador(),
+                widget.Sep(
+                    linewidth = 0,
+                    padding = 12,
+                    foreground = color_fg,
+                    background = color_bg
+                ),
                 widget.Prompt(),
                 widget.WindowName(
                     foreground = color_texto1,
                     background = color_bg
                 ),
-                fc_separador(),
+                widget.Sep(
+                    linewidth = 0,
+                    padding = 3,
+                    foreground = color_fg,
+                    background = color_bg
+                ),
                 # Inicio del Grupo 1
-                fc_rectangulo(color_grupo1, 0),
-                fc_icono("", color_grupo1),
-                widget.ThermalSensor(
+                #fc_rectangulo(color_grupo1, 0),
+                #fc_icono("", color_grupo1),
+                #widget.ThermalSensor(
+                    #foreground = color_fg,
+                    #background = color_grupo1,
+                    #threshold = 50,
+                    #tag_sensor = "Tdie",
+                    #fmt = 'T1:{}'
+                #),
+                #widget.ThermalSensor(
+                    #foreground = color_fg,
+                    #background = color_grupo1,
+                    #threshold = 50,
+                    #tag_sensor = "edge",
+                    #fmt = 'T2:{}'
+                #),
+                #fc_icono("  ", color_grupo1),
+                #widget.Memory(
+                    #foreground = color_fg,
+                    #background = color_grupo1
+                #),
+                # Iconos
+                widget.TextBox(
+                    text = "",
+                    background = colorBarra,
+                    foreground = colorBarra,
+                    padding = -3,
+                    fontsize = 37
+                ),
+                widget.Systray(
+                    icon_size = tamano_iconos,
+                    background = colorBarra,
+                ),
+                widget.Sep(
+                    linewidth = 0,
+                    padding = 6,
                     foreground = color_fg,
-                    background = color_grupo1,
-                    threshold = 50,
-                    tag_sensor = "Tdie",
-                    fmt = 'T1:{}'
+                    background = color_bg
                 ),
-                widget.ThermalSensor(
-                    foreground = color_fg,
-                    background = color_grupo1,
-                    threshold = 50,
-                    tag_sensor = "edge",
-                    fmt = 'T2:{}'
+                # Grupo 1
+                widget.TextBox(
+                    text = "",
+                    background = colorBarra,
+                    foreground = color_grupo1,
+                    padding = -3,
+                    fontsize = 37
                 ),
-                fc_icono("  ", color_grupo1),
-                widget.Memory(
-                    foreground = color_fg,
-                    background = color_grupo1
-                ),
-                fc_rectangulo(color_grupo1, 1),
-                fc_separador(),
-                # Fin del Grupo 1 e inicio del Grupo 2
-                fc_rectangulo(color_grupo2, 0),
-                fc_icono("  ", color_grupo2),
-                widget.CheckUpdates(
-                    background = color_grupo2,
-                    colour_have_updates = color_actualizaciones,
-                    colour_no_updates = color_fg,
-                    no_update_string = '0',
-                    display_fomart = '{updates}',
-                    update_interval = 1000,
-                    distro='Arch_checkupdates'
-                ),
-                fc_icono(" 龍", color_grupo2),
+                fc_icono(" 龍", color_grupo1),
                 widget.Net(
                     foreground = color_fg,
-                    background = color_grupo2,
+                    background = color_grupo1,
                     format = '{down}   {up}',
                     interface = dispositivo_red,
                     use_bits = True
                 ),
-                fc_rectangulo(color_grupo2, 1),
-                fc_separador(),
-                # Fin del Grupo 2 e inicio del Grupo 3
-                fc_rectangulo(color_grupo3, 0),             
-                widget.Clock(
-                    background = color_grupo3,
-                    foreground = color_fg,
-                    format='%d/%m/%Y %H:%M'
+                # Grupo 2
+                fc_separador(color_grupo1),
+                fc_powerline(color_grupo2, color_grupo1),
+                widget.CurrentLayoutIcon(
+                    background = color_grupo2,
+                    scale = 0.7
                 ),
+                widget.CurrentLayout(
+                    background = color_grupo2
+                ),
+                # Grupo 3
+                fc_powerline(color_grupo3, color_grupo2),
                 fc_icono("  ", color_grupo3),
                 widget.PulseVolume(
                     foreground = color_fg,
@@ -295,22 +317,24 @@ screens = [
                     limit_max_volume = True,
                     fontsize = tamano_fuente
                 ),
-                fc_rectangulo(color_grupo3, 1),
-                fc_separador(),
-                # Fin del Grupo 3 e inicio del Grupo 4
-                fc_rectangulo(color_grupo4, 0),
-                widget.CurrentLayoutIcon(
+                fc_icono("  ", color_grupo3),
+                widget.CheckUpdates(
+                    background = color_grupo3,
+                    colour_have_updates = color_actualizaciones,
+                    colour_no_updates = color_fg,
+                    no_update_string = '0',
+                    display_format = 'Updates: {updates}',
+                    update_interval = 1800,
+                    distro = 'Arch_checkupdates'
+                ),
+                # Grupo 4
+                fc_separador(color_grupo3),
+                fc_powerline(color_grupo4, color_grupo3),
+                widget.Clock(
                     background = color_grupo4,
-                    scale = 0.7
+                    foreground = color_fg,
+                    format = "%A, %B %d - %H:%M"
                 ),
-                widget.CurrentLayout(
-                    background = color_grupo4
-                ),
-                widget.Systray(
-                    icon_size = tamano_iconos,
-                    background = color_grupo4
-                ),
-                fc_rectangulo(color_grupo4, 1),
             ],
             tamano_barra,
             background=colorBarra
